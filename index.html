@@ -530,21 +530,38 @@
       e.preventDefault();
       const btn  = document.getElementById('joinBtn');
       const mail = document.getElementById('emailInput');
+      const ded  = document.getElementById('dedInput');
       if (!mail.validity.valid || !mail.value) {
         mail.style.borderColor = 'rgba(220,50,50,.7)';
         setTimeout(() => { mail.style.borderColor = ''; }, 2200);
         return;
       }
-      btn.textContent = '¡Bienvenido/a! ✓';
-      btn.style.background = 'var(--accent)';
-      btn.style.color = 'var(--bg)';
-      mail.value = '';
-      document.getElementById('dedInput').value = '';
-      setTimeout(() => {
-        btn.textContent = 'Entrar al movimiento';
-        btn.style.background = '';
-        btn.style.color = '';
-      }, 5000);
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+      const body = new URLSearchParams({
+        'form-name': 'inviralizables',
+        email: mail.value,
+        dedicatoria: ded.value
+      });
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body })
+        .then(() => {
+          btn.textContent = '¡Bienvenido/a! ✓';
+          btn.style.background = 'var(--accent)';
+          btn.style.color = 'var(--bg)';
+          mail.value = '';
+          ded.value = '';
+          setTimeout(() => {
+            btn.textContent = 'Entrar al movimiento';
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.disabled = false;
+          }, 5000);
+        })
+        .catch(() => {
+          btn.textContent = 'Error, intenta de nuevo';
+          btn.disabled = false;
+          setTimeout(() => { btn.textContent = 'Entrar al movimiento'; }, 3000);
+        });
     }
   </script>
 </body>
