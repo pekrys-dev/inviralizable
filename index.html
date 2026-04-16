@@ -469,13 +469,15 @@
     </p>
 
     <!-- Form -->
-    <form id="joinForm" class="sr d4 flex flex-col gap-4 max-w-lg" onsubmit="handleJoin(event)" novalidate>
+    <form id="joinForm" name="inviralizables" method="POST" data-netlify="true" class="sr d4 flex flex-col gap-4 max-w-lg" onsubmit="handleJoin(event)" novalidate>
+      <input type="hidden" name="form-name" value="inviralizables">
       <div class="flex flex-col sm:flex-row gap-0">
-        <input id="emailInput" type="email" class="field" placeholder="tu@email.com" required autocomplete="email">
+        <input id="emailInput" name="email" type="email" class="field" placeholder="tu@email.com" required autocomplete="email">
         <button type="submit" class="btn whitespace-nowrap" id="joinBtn">Entrar al movimiento</button>
       </div>
       <textarea
         id="dedInput"
+        name="dedicatoria"
         class="field"
         rows="3"
         placeholder='"Mi abuela nunca tuvo redes. Pero toda la familia pasó por su mesa."'
